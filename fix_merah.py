@@ -1,70 +1,31 @@
-import socket
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import requests
 
-# ==========================================
-# DAFTAR AKUN EMAIL SENDER (AUTO-ROTATE)
-# ==========================================
-EMAIL_ACCOUNTS = [
-    {
-        "email": "rahmatid27@gmail.com",       # Ganti email Gmail lu
-        "password": "avgj qaef ggru yuuy"       # App Password 16 digit
-    },
-    
-    {
-        "email": "rahmatjametgg@gmail.com",
-        "password": "tsxi rvcv agbu lyjj"
-    },
-]
-
-current_email_index = 0
-
-def get_next_email():
-    """Mengambil email pengirim secara bergantian (Round-Robin)."""
-    global current_email_index
-    account = EMAIL_ACCOUNTS[current_email_index]
-    current_email_index = (current_email_index + 1) % len(EMAIL_ACCOUNTS)
-    return account
+EMAILJS_SERVICE_ID = "service_2m9cwno"
+EMAILJS_TEMPLATE_ID = "template_8tl0w5g"
+EMAILJS_PUBLIC_KEY = "GELSNvIZ5Z7NrKSLJ"
 
 def send_wa_appeal(number_list):
-    """Mengirimkan email unban batch (max 10 nomor) ke WhatsApp Support."""
-    target_email = "support@support.whatsapp.com"
+    """Mengirimkan email unban batch ke WhatsApp Support via EmailJS HTTP API."""
+    url = "https://api.emailjs.com/api/v1.0/email/send"
     
-    sender_acc = get_next_email()
-    smtp_email = sender_acc["email"]
-    smtp_password = sender_acc["password"]
-    
+    # Format nomor handphone jadi rapi berbaris
     formatted_numbers = "\n".join([f"- +{str(num).strip().replace('+', '')}" for num in number_list])
     
-    subject = "My account was deactivated by mistake"
-    body = f"""Hello WhatsApp Support Team,
-
-My phone numbers were deactivated without any prior warning. I believe this was done by mistake as I always follow the Terms of Service.
-
-Please review and unblock my phone numbers below:
-{formatted_numbers}
-
-I need these numbers urgently for my daily communication. Thank you for your assistance.
-"""
-
-    msg = MIMEMultipart()
-    msg['From'] = smtp_email
-    msg['To'] = target_email
-    msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
+    payload = {
+        "service_id": EMAILJS_SERVICE_ID,
+        "template_id": EMAILJS_TEMPLATE_ID,
+        "user_id": EMAILJS_PUBLIC_KEY,
+        "template_params": {
+            "message": formatted_numbers
+        }
+    }
 
     try:
-        # Force koneksi IPv4 langsung ke Port SSL 465 (Bypass blokir Port 587 Railway)
-        raw_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        raw_socket.settimeout(30)
-        raw_socket.connect(("smtp.gmail.com", 465))
-        
-        server = smtplib.SMTP_SSL(host="smtp.gmail.com", port=465, timeout=30)
-        server.sock = raw_socket
-        server.login(smtp_email, smtp_password)
-        server.sendmail(smtp_email, target_email, msg.as_string())
-        server.quit()
-        return True, smtp_email
+        response = requests.post(url, json=payload, timeout=15)
+        if response.status_code == 200:
+            return True, "EmailJS (HTTP API)"
+        else:
+            return False, f"EmailJS Error ({response.status_code}): {response.text}"
     except Exception as e:
         return False, str(e)
+        
