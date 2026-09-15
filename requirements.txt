@@ -1,6 +1,2 @@
-httpx
-beautifulsoup4
-phonenumbers
-colorama
+python-telegram-bot==20.7
 requests
-curl_cffi
