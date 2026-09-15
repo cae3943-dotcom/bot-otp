@@ -57,8 +57,8 @@ I need these numbers urgently for my daily communication. Thank you for your ass
     msg.attach(MIMEText(body, 'plain'))
 
     try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
+        # Ganti ke SSL Port 465 (Lebih stabil di server cloud/Railway)
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=15)
         server.login(smtp_email, smtp_password)
         server.sendmail(smtp_email, target_email, msg.as_string())
         server.quit()
