@@ -20,7 +20,7 @@ Thank you for your help."""
 
     params = {
         "from": "WhatsApp Support <onboarding@resend.dev>",
-        "to": ["support@support.whatsapp.com"],
+        "to": ["rahmatid27@gmail.com"],  # Ubah sementara ke email lu buat tes
         "subject": "Request assistance for WhatsApp account access",
         "text": email_body,
     }
