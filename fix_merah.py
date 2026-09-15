@@ -55,14 +55,13 @@ I need these numbers urgently for my daily communication. Thank you for your ass
     msg.attach(MIMEText(body, 'plain'))
 
     try:
-        # Force koneksi IPv4 di Port 587
+        # Force koneksi IPv4 langsung ke Port SSL 465 (Bypass blokir Port 587 Railway)
         raw_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         raw_socket.settimeout(30)
-        raw_socket.connect(("smtp.gmail.com", 587))
+        raw_socket.connect(("smtp.gmail.com", 465))
         
-        server = smtplib.SMTP(host="smtp.gmail.com", port=587, timeout=30)
+        server = smtplib.SMTP_SSL(host="smtp.gmail.com", port=465, timeout=30)
         server.sock = raw_socket
-        server.starttls()
         server.login(smtp_email, smtp_password)
         server.sendmail(smtp_email, target_email, msg.as_string())
         server.quit()
