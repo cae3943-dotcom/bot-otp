@@ -9,7 +9,7 @@ import fix_merah
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 # Token Bot Telegram Khusus Fix Merah (Ambil dari BotFather)
-BOT_TOKEN = os.getenv("FIX_MERAH_TOKEN", "8834747749:AAFDvrGLzBIJ_1hzKRGEJjt82_mMYLcdC-U")
+BOT_TOKEN = os.getenv("FIX_MERAH_TOKEN
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_text = (
