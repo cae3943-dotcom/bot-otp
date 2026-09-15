@@ -3,6 +3,7 @@ import requests
 EMAILJS_SERVICE_ID = "service_2m9cwno"
 EMAILJS_TEMPLATE_ID = "template_8tl0w5g"
 EMAILJS_PUBLIC_KEY = "GELSNvIZ5Z7NrKSLJ"
+EMAILJS_PRIVATE_KEY = "csUPUQYH2D7yCGht5eveU"
 
 def send_wa_appeal(number_list):
     """Mengirimkan email unban batch ke WhatsApp Support via EmailJS HTTP API."""
@@ -15,6 +16,7 @@ def send_wa_appeal(number_list):
         "service_id": EMAILJS_SERVICE_ID,
         "template_id": EMAILJS_TEMPLATE_ID,
         "user_id": EMAILJS_PUBLIC_KEY,
+        "accessToken": EMAILJS_PRIVATE_KEY,
         "template_params": {
             "message": formatted_numbers
         }
