@@ -895,6 +895,9 @@ def keepalive_worker(accounts):
                 base = get_base()
                 try:
                     r = acc["session"].get(f"{base}/portal", timeout=15)
+                    
+                    _log("DEBUG", f"URL Redirect: {r.url} | Status: {r.status_code}", Fore.YELLOW)
+                    
                     if is_worker_blocked(r):
                         mark_worker_limited(base)
                         continue
