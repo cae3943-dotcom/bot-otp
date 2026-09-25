@@ -82,9 +82,7 @@ def _log(tag, msg, color=Fore.CYAN):
 # WORKER POOL  (proxy fallback jika kena rate-limit)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 WORKER_POOL = [
-    "https://ivasmunchen.serverprivate1.web.id",
-    "https://ivasmsbykicenv2.kikixrakaofficial.biz.id",
-    "https://ivasbykiven.alwayskixyzshop.web.id",
+    "https://ivasms.com",
 ]
 
 _worker_lock          = threading.Lock()
