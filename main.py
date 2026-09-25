@@ -82,7 +82,6 @@ def _log(tag, msg, color=Fore.CYAN):
 # WORKER POOL  (proxy fallback jika kena rate-limit)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 WORKER_POOL = [
-    "https://plain-butterfly-d9e9.kicenivas.workers.dev",
     "https://ivasmunchen.serverprivate1.web.id",
     "https://ivasmsbykicenv2.kikixrakaofficial.biz.id",
     "https://ivasbykiven.alwayskixyzshop.web.id",
